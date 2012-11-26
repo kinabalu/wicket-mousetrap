@@ -5,6 +5,7 @@ import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 
 import java.util.HashMap;
@@ -34,7 +35,7 @@ public class Mousetrap extends Behavior {
                     .append("'}) });\n");
 
         }
-        response.render(JavaScriptHeaderItem.forScript(mousetrapBinds, null));
+        response.render(OnDomReadyHeaderItem.forScript(mousetrapBinds));
 
     }
 
