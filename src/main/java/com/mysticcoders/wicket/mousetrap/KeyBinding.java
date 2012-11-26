@@ -55,6 +55,13 @@ public class KeyBinding implements Serializable {
         }
     }
 
+    /**
+     * ...
+     *
+     * @param combo
+     * @param keys
+     * @return
+     */
     private KeyBinding addKeys(boolean combo, String... keys) {
         if (keys == null || keys.length == 0) return this;
 
@@ -92,6 +99,11 @@ public class KeyBinding implements Serializable {
         return addKeys(false, keys);
     }
 
+    /**
+     * ...
+     *
+     * @return
+     */
     public String toString() {
         StringBuilder mtKeys = new StringBuilder();
         if (keysOptions.size() > 1) {

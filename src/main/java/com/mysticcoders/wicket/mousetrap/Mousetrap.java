@@ -22,6 +22,12 @@ public class Mousetrap extends Behavior {
 
     private Map<KeyBinding, AbstractDefaultAjaxBehavior> behaviors = new HashMap<KeyBinding, AbstractDefaultAjaxBehavior>();
 
+    /**
+     * ...
+     *
+     * @param component
+     * @param response
+     */
     public void renderHead(final Component component, IHeaderResponse response) {
         super.renderHead(component, response);
         response.render(JavaScriptHeaderItem.forReference(new JavaScriptResourceReference(Mousetrap.class, "mousetrap.min.js")));
@@ -39,6 +45,12 @@ public class Mousetrap extends Behavior {
 
     }
 
+    /**
+     * ...
+     *
+     * @param keyBinding
+     * @param behavior
+     */
     public void addBind(KeyBinding keyBinding, AbstractDefaultAjaxBehavior behavior) {
         behaviors.put(keyBinding, behavior);
     }
