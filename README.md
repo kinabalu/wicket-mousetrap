@@ -1,21 +1,21 @@
 wicket-mousetrap
 ================
 
-A small wicket library to utilize mousetrap.js [http://craig.is/killing/mice].  For an example of how this works
+A small wicket 6 library to utilize mousetrap.js [http://craig.is/killing/mice].  For an example of how this works
 you can see a [demo](http://mysticpaste.com/).
 
 Here's an example of usage pulled from the [Mystic Pastebin](http://github.com/kinabalu/mysticpaste)
 
 ```java
-    final AbstractDefaultAjaxBehavior historyNav = new AbstractDefaultAjaxBehavior() {
-        @Override
-        protected void respond(AjaxRequestTarget target) {
-            throw new RestartResponseException(HistoryPage.class);
-        }
-    };
-    add(historyNav);
+final AbstractDefaultAjaxBehavior historyNav = new AbstractDefaultAjaxBehavior() {
+    @Override
+    protected void respond(AjaxRequestTarget target) {
+        throw new RestartResponseException(HistoryPage.class);
+    }
+};
+add(historyNav);
 
-    mousetrap.addBind(new KeyBinding().addKeyCombo("n"), newNav);
+mousetrap.addBind(new KeyBinding().addKeyCombo("n"), newNav);
 ```
 
 
