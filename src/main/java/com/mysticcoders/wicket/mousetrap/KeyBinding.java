@@ -5,11 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * User: kinabalu
- * Date: 11/25/12
- * Time: 11:49 PM
- * To change this template use File | Settings | File Templates.
+ * KeyBinding for mousetrap.js
  */
 public class KeyBinding implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -62,7 +58,7 @@ public class KeyBinding implements Serializable {
     private KeyBinding addKeys(boolean combo, String... keys) {
         if (keys == null || keys.length == 0) return this;
 
-        StringBuffer watchKeys = new StringBuffer();
+        StringBuilder watchKeys = new StringBuilder();
         for (String key : keys) {
             watchKeys.append(key).append(combo ? "+" : " ");
         }
