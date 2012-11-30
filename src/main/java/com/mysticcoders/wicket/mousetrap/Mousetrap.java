@@ -12,7 +12,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Binding to mousetrap.js
+ * Binding for mousetrap.js
+ *
  * from: http://craig.is/killing/mice
  *
  * @author Andrew Lombardi
@@ -23,6 +24,13 @@ public class Mousetrap extends Behavior {
     private Map<KeyBinding, AbstractDefaultAjaxBehavior> bindings = new HashMap<KeyBinding, AbstractDefaultAjaxBehavior>();
     private Map<KeyBinding, AbstractDefaultAjaxBehavior> globalBindings = new HashMap<KeyBinding, AbstractDefaultAjaxBehavior>();
 
+    /**
+     * Convenience method for returning a mousetrap binding call
+     *
+     * @param global are we going to bind this globally?
+     * @param bindings list of bindings
+     * @return Mousetrap bindings
+     */
     private StringBuffer getMousetrapBinds(boolean global, Map<KeyBinding, AbstractDefaultAjaxBehavior> bindings) {
         StringBuffer mousetrapBinds = new StringBuffer();
         for (Map.Entry<KeyBinding, AbstractDefaultAjaxBehavior> entry : bindings.entrySet()) {
@@ -43,10 +51,10 @@ public class Mousetrap extends Behavior {
     }
 
     /**
-     * ...
+     * Render to the web response whatever the component wants to contribute to the head section.
      *
-     * @param component
-     * @param response
+     * @param component component this behavior is attached to
+     * @param response Response object
      */
     public void renderHead(final Component component, IHeaderResponse response) {
         super.renderHead(component, response);
@@ -68,20 +76,22 @@ public class Mousetrap extends Behavior {
     }
 
     /**
-     * ...
+     * Adds a key binding to Mousetrap for given behavior
      *
-     * @param keyBinding
-     * @param behavior
+     * @param keyBinding keys to bind
+     * @param behavior behavior to execute upon binding being fired
      */
     public void addBind(KeyBinding keyBinding, AbstractDefaultAjaxBehavior behavior) {
         bindings.put(keyBinding, behavior);
     }
 
     /**
-     * ...
+     * Adds a global key binding to Mousetrap for given behavior
      *
-     * @param keyBinding
-     * @param behavior
+     * - this will fire wherever your focus is, including text fields, any form element
+     *
+     * @param keyBinding keys to bind
+     * @param behavior behavior to execute upon binding being fired
      */
     public void addGlobalBind(KeyBinding keyBinding, AbstractDefaultAjaxBehavior behavior) {
         globalBindings.put(keyBinding, behavior);

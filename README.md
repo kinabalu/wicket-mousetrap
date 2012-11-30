@@ -15,9 +15,22 @@ final AbstractDefaultAjaxBehavior historyNav = new AbstractDefaultAjaxBehavior()
 };
 add(historyNav);
 
-mousetrap.addBind(new KeyBinding().addKeyCombo("n"), newNav);
+mousetrap.addBind(new KeyBinding().addKeyCombo("n"), historyNav);
 ```
 
+Library supports the standard key bindings, along with global bindings (works inside form fields as well):
+
+regular binding:
+```java
+mousetrap.addBind(new KeyBinding().addKeyCombo("ctrl+enter"), myAjaxBehavior);
+```
+
+global binding:
+```java
+mousetrap.addGlobalBind(new KeyBinding().addKeyCombo("ctrl+enter"), myAjaxBehavior);
+```
+
+See the javascript page for examples of more usage [http://craig.is/killing/mice].
 
 
 If you'd like to use our maven repo add the following to your Maven configuration files:

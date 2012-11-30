@@ -6,6 +6,8 @@ import java.util.List;
 
 /**
  * KeyBinding for mousetrap.js
+ *
+ * @author Andrew Lombardi
  */
 public class KeyBinding implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -46,9 +48,13 @@ public class KeyBinding implements Serializable {
 
     private List<String> keysOptions = new ArrayList<String>();
 
-    public KeyBinding() {
-    }
+    public KeyBinding() { }
 
+    /**
+     * If we want to capture a specific key event
+     *
+     * @param eventType one of keypress, keydown, keyup
+     */
     public KeyBinding(String eventType) {
         if (EVENT_KEYPRESS.equals(eventType) || EVENT_KEYDOWN.equals(eventType) || EVENT_KEYUP.equals(eventType)) {
             this.eventType = eventType;
@@ -56,11 +62,11 @@ public class KeyBinding implements Serializable {
     }
 
     /**
-     * ...
+     * Convenience method for adding a formatted String for use with mousetrap.js
      *
-     * @param combo
-     * @param keys
-     * @return
+     * @param combo is this a key combo or sequence
+     * @param keys a vararg of keys
+     * @return KeyBinding object
      */
     private KeyBinding addKeys(boolean combo, String... keys) {
         if (keys == null || keys.length == 0) return this;
@@ -80,8 +86,8 @@ public class KeyBinding implements Serializable {
      * <p/>
      * ctrl+shift+up
      *
-     * @param keys
-     * @return
+     * @param keys vararg of keys to add to a binding
+     * @return KeyBinding object
      */
     public KeyBinding addKeyCombo(String... keys) {
         return addKeys(true, keys);
@@ -92,26 +98,22 @@ public class KeyBinding implements Serializable {
      * <p/>
      * g a
      *
-     * @param keys
-     * @return
+     * @param keys vararg of keys to bind to a sequence
+     * @return KeyBinding object
      */
     public KeyBinding addKeySequence(String... keys) {
         return addKeys(false, keys);
     }
 
-    /**
-     *
-     *
-     * @return
-     */
+
     public String getEventType() {
         return eventType;
     }
 
     /**
-     * ...
+     * Put together a String for use with mousetrap.js
      *
-     * @return
+     * @return String formatted for use with mousetrap.js
      */
     public String toString() {
         StringBuilder mtKeys = new StringBuilder();
