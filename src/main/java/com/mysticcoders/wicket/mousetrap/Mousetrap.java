@@ -39,10 +39,9 @@ public class Mousetrap extends Behavior {
             for (Map.Entry<KeyBinding, AbstractDefaultAjaxBehavior> entry : bindings.entrySet()) {
                 mousetrapBinds.append("Mousetrap.bind(")
                         .append(entry.getKey())
-                        .append(", function(e) { Wicket.Ajax.get({'u': '")
-                        .append(entry.getValue().getCallbackUrl())
-                        .append("'}) });\n");
-
+                        .append(", function(e) { ")
+                        .append(entry.getValue().getCallbackScript())
+                        .append(" });\n");
             }
             response.render(OnDomReadyHeaderItem.forScript(mousetrapBinds));
         }
@@ -54,10 +53,9 @@ public class Mousetrap extends Behavior {
             for (Map.Entry<KeyBinding, AbstractDefaultAjaxBehavior> entry : globalBindings.entrySet()) {
                 mousetrapGlobalBinds.append("Mousetrap.bindGlobal(")
                         .append(entry.getKey())
-                        .append(", function(e) { Wicket.Ajax.get({'u': '")
-                        .append(entry.getValue().getCallbackUrl())
-                        .append("'}) });\n");
-
+                        .append(", function(e) { ")
+                        .append(entry.getValue().getCallbackScript())
+                        .append(" });\n");
             }
             response.render(OnDomReadyHeaderItem.forScript(mousetrapGlobalBinds));
         }
@@ -83,5 +81,7 @@ public class Mousetrap extends Behavior {
     public void addGlobalBind(KeyBinding keyBinding, AbstractDefaultAjaxBehavior behavior) {
         globalBindings.put(keyBinding, behavior);
     }
+
+
 
 }
