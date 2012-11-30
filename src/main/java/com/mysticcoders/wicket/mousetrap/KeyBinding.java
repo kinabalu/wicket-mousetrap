@@ -100,6 +100,15 @@ public class KeyBinding implements Serializable {
     }
 
     /**
+     *
+     *
+     * @return
+     */
+    public String getEventType() {
+        return eventType;
+    }
+
+    /**
      * ...
      *
      * @return

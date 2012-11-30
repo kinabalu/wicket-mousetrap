@@ -23,6 +23,25 @@ public class Mousetrap extends Behavior {
     private Map<KeyBinding, AbstractDefaultAjaxBehavior> bindings = new HashMap<KeyBinding, AbstractDefaultAjaxBehavior>();
     private Map<KeyBinding, AbstractDefaultAjaxBehavior> globalBindings = new HashMap<KeyBinding, AbstractDefaultAjaxBehavior>();
 
+    private StringBuffer getMousetrapBinds(boolean global, Map<KeyBinding, AbstractDefaultAjaxBehavior> bindings) {
+        StringBuffer mousetrapBinds = new StringBuffer();
+        for (Map.Entry<KeyBinding, AbstractDefaultAjaxBehavior> entry : bindings.entrySet()) {
+            mousetrapBinds.append("Mousetrap.").append(global ? "bindGlobal" : "bind").append("(")
+                    .append(entry.getKey())
+                    .append(", function(e) { ")
+                    .append(entry.getValue().getCallbackScript())
+                    .append(" }");
+            if(entry.getKey().getEventType()!=null) {
+                mousetrapBinds.append(", '")
+                        .append(entry.getKey().getEventType())
+                        .append("'");
+            }
+            mousetrapBinds.append(");\n");
+        }
+
+        return mousetrapBinds;
+    }
+
     /**
      * ...
      *
@@ -35,29 +54,15 @@ public class Mousetrap extends Behavior {
         if (bindings.size() > 0) {
             response.render(JavaScriptHeaderItem.forReference(new JavaScriptResourceReference(Mousetrap.class, "mousetrap.min.js")));
 
-            StringBuffer mousetrapBinds = new StringBuffer();
-            for (Map.Entry<KeyBinding, AbstractDefaultAjaxBehavior> entry : bindings.entrySet()) {
-                mousetrapBinds.append("Mousetrap.bind(")
-                        .append(entry.getKey())
-                        .append(", function(e) { ")
-                        .append(entry.getValue().getCallbackScript())
-                        .append(" });\n");
-            }
+            StringBuffer mousetrapBinds = getMousetrapBinds(false, bindings);
             response.render(OnDomReadyHeaderItem.forScript(mousetrapBinds));
         }
 
         if (globalBindings.size() > 0) {
             response.render(JavaScriptHeaderItem.forReference(new JavaScriptResourceReference(Mousetrap.class, "mousetrap-global.min.js")));
 
-            StringBuffer mousetrapGlobalBinds = new StringBuffer();
-            for (Map.Entry<KeyBinding, AbstractDefaultAjaxBehavior> entry : globalBindings.entrySet()) {
-                mousetrapGlobalBinds.append("Mousetrap.bindGlobal(")
-                        .append(entry.getKey())
-                        .append(", function(e) { ")
-                        .append(entry.getValue().getCallbackScript())
-                        .append(" });\n");
-            }
-            response.render(OnDomReadyHeaderItem.forScript(mousetrapGlobalBinds));
+            StringBuffer mousetrapBinds = getMousetrapBinds(true, globalBindings);
+            response.render(OnDomReadyHeaderItem.forScript(mousetrapBinds));
         }
 
     }
