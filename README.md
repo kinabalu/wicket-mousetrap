@@ -25,9 +25,19 @@ regular binding:
 mousetrap.addBind(new KeyBinding().addKeyCombo("ctrl+enter"), myAjaxBehavior);
 ```
 
-global binding:
+global binding (will work inside form fields):
 ```java
 mousetrap.addGlobalBind(new KeyBinding().addKeyCombo("ctrl+enter"), myAjaxBehavior);
+```
+
+default binding (will override the browser default):
+```java
+mousetrap.addDefaultBind(new KeyBinding().addKeyCombo("ctrl+enter"), myAjaxBehavior);
+```
+
+default global binding (will override the browser default + will work inside form fields):
+```java
+mousetrap.addDefaultGlobalBind(new KeyBinding().addKeyCombo("ctrl+enter"), myAjaxBehavior);
 ```
 
 See the javascript page for examples of more usage [http://craig.is/killing/mice].
