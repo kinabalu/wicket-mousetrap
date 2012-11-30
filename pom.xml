@@ -5,7 +5,7 @@
     <groupId>com.mysticcoders</groupId>
     <artifactId>wicket-mousetrap</artifactId>
     <packaging>jar</packaging>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.2-SNAPSHOT</version>
     <name>wicket mousetrap.js</name>
 
     <organization>

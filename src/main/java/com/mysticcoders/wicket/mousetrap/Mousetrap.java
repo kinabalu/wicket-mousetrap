@@ -20,7 +20,8 @@ import java.util.Map;
 public class Mousetrap extends Behavior {
     private static final long serialVersionUID = 1L;
 
-    private Map<KeyBinding, AbstractDefaultAjaxBehavior> behaviors = new HashMap<KeyBinding, AbstractDefaultAjaxBehavior>();
+    private Map<KeyBinding, AbstractDefaultAjaxBehavior> bindings = new HashMap<KeyBinding, AbstractDefaultAjaxBehavior>();
+    private Map<KeyBinding, AbstractDefaultAjaxBehavior> globalBindings = new HashMap<KeyBinding, AbstractDefaultAjaxBehavior>();
 
     /**
      * ...
@@ -30,18 +31,36 @@ public class Mousetrap extends Behavior {
      */
     public void renderHead(final Component component, IHeaderResponse response) {
         super.renderHead(component, response);
-        response.render(JavaScriptHeaderItem.forReference(new JavaScriptResourceReference(Mousetrap.class, "mousetrap.min.js")));
 
-        StringBuffer mousetrapBinds = new StringBuffer();
-        for (Map.Entry<KeyBinding, AbstractDefaultAjaxBehavior> entry : behaviors.entrySet()) {
-            mousetrapBinds.append("Mousetrap.bind(")
-                    .append(entry.getKey())
-                    .append(", function(e) { Wicket.Ajax.get({'u': '")
-                    .append(entry.getValue().getCallbackUrl())
-                    .append("'}) });\n");
+        if (bindings.size() > 0) {
+            response.render(JavaScriptHeaderItem.forReference(new JavaScriptResourceReference(Mousetrap.class, "mousetrap.min.js")));
 
+            StringBuffer mousetrapBinds = new StringBuffer();
+            for (Map.Entry<KeyBinding, AbstractDefaultAjaxBehavior> entry : bindings.entrySet()) {
+                mousetrapBinds.append("Mousetrap.bind(")
+                        .append(entry.getKey())
+                        .append(", function(e) { Wicket.Ajax.get({'u': '")
+                        .append(entry.getValue().getCallbackUrl())
+                        .append("'}) });\n");
+
+            }
+            response.render(OnDomReadyHeaderItem.forScript(mousetrapBinds));
         }
-        response.render(OnDomReadyHeaderItem.forScript(mousetrapBinds));
+
+        if (globalBindings.size() > 0) {
+            response.render(JavaScriptHeaderItem.forReference(new JavaScriptResourceReference(Mousetrap.class, "mousetrap-global.min.js")));
+
+            StringBuffer mousetrapGlobalBinds = new StringBuffer();
+            for (Map.Entry<KeyBinding, AbstractDefaultAjaxBehavior> entry : globalBindings.entrySet()) {
+                mousetrapGlobalBinds.append("Mousetrap.bindGlobal(")
+                        .append(entry.getKey())
+                        .append(", function(e) { Wicket.Ajax.get({'u': '")
+                        .append(entry.getValue().getCallbackUrl())
+                        .append("'}) });\n");
+
+            }
+            response.render(OnDomReadyHeaderItem.forScript(mousetrapGlobalBinds));
+        }
 
     }
 
@@ -52,8 +71,17 @@ public class Mousetrap extends Behavior {
      * @param behavior
      */
     public void addBind(KeyBinding keyBinding, AbstractDefaultAjaxBehavior behavior) {
-        behaviors.put(keyBinding, behavior);
+        bindings.put(keyBinding, behavior);
     }
 
+    /**
+     * ...
+     *
+     * @param keyBinding
+     * @param behavior
+     */
+    public void addGlobalBind(KeyBinding keyBinding, AbstractDefaultAjaxBehavior behavior) {
+        globalBindings.put(keyBinding, behavior);
+    }
 
 }
